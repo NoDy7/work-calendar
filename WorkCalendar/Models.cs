@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace WorkCalendar;
 
@@ -26,9 +27,9 @@ public class DayEntry
     public List<Expense> Expenses { get; set; } = new();
     public string Note { get; set; } = "";
 
-    public double Earned => !Worked ? 0 : (Mode == PayMode.Shift ? Rate : Rate * Hours);
-    public double Spent => Expenses.Sum(e => e.Amount);
-    public double Net => Earned - Spent;
+    [JsonIgnore] public double Earned => !Worked ? 0 : (Mode == PayMode.Shift ? Rate : Rate * Hours);
+    [JsonIgnore] public double Spent => Expenses.Sum(e => e.Amount);
+    [JsonIgnore] public double Net => Earned - Spent;
 }
 
 public class AppSettings
